@@ -1,0 +1,16 @@
+{
+    "Lua.diagnostics.globals": [
+        "app",
+        "init",
+        "Dialog",
+        "Sprite",
+        "enums",
+        "Rectangle",
+        "Brush",
+        "MouseButton",
+        "TilemapMode",
+        "TilesetMode",
+        "Point",
+        "Color"
+    ]
+}
