@@ -13,8 +13,6 @@ local constants = {
 local QuickAutoTileActionsNewLayerTab = {
     dialog = nil,
     drawingLayerName = "New Layer",
-    halfTileWidth = 18,
-    halfTileHeight = 18,
     constants = constants,
 }
 
@@ -43,11 +41,20 @@ function QuickAutoTileActionsNewLayerTab:Init(dialog)
         onclick = function()
             local drawingLayerProperties
             drawingLayerProperties = LayerProperties.createLayerFromSpriteReturnDrawingLayerProperties(self.drawingLayerName)
+            local tileProperties = TileProperties.getFromSprite(app.sprite)
+            if not tileProperties.isValid then
+                self.dialog:modify{
+                    id=constants.NEW_LAYER_TAB_ID,
+                    visible=false,
+                    enabled=false
+                }
+                return
+            end
             
             app.transaction(
                 "Draw starting tiles",
                 function()
-                    DefaultTileMap:draw(self.halfTileWidth, self.halfTileHeight, drawingLayerProperties.layer)
+                    DefaultTileMap:draw(tileProperties.halfTileWidth, tileProperties.halfTileHeight, drawingLayerProperties.layer)
                 end
             )
         end
