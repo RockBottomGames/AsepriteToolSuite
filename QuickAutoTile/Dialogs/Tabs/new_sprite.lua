@@ -1,3 +1,4 @@
+local LayerProperties = dofile("../../Utility/Sprite/layer_properties.lua")
 local SpriteUtilsProperties = dofile("../../Utility/Sprite/properties.lua")
 local DefaultTileMap = dofile("../../Utility/Drawing/default_tile_map.lua")
 
@@ -10,6 +11,7 @@ local constants = {
     NEW_SPRITE_MIRROR_X_ID = "qat_new_sprite_mirror_x",
     NEW_SPRITE_MIRROR_Y_ID = "qat_new_sprite_mirror_y",
     NEW_SPRITE_MIRROR_D_ID = "qat_new_sprite_mirror_d",
+    REFERENCE_LAYER_NAME = "Reference Layer"
 }
 
 local QuickAutoTileActionsNewSpriteTab = {
@@ -104,13 +106,46 @@ function QuickAutoTileActionsNewSpriteTab:Init(dialog)
         onclick = function()
             local drawingLayerProperties
             drawingLayerProperties = SpriteUtilsProperties.createSpriteWithPropertiesReturnDrawingLayerProperties(self.halfTileWidth, self.halfTileHeight, self.drawingLayerName)
-            
             app.transaction(
                 "Draw starting tiles",
                 function()
                     DefaultTileMap:draw(self.halfTileWidth, self.halfTileHeight, drawingLayerProperties.layer)
                 end
             )
+            local tilemap = false
+            local top = false
+            local before = true
+            local fromClipboard = true
+            app.layer = drawingLayerProperties.layer
+            LayerProperties.createLayerFromSpriteReturnLayerPropertiesObject(constants.REFERENCE_LAYER_NAME, LayerProperties.layerTypes.REFERENCE_LAYER, tilemap, top, before, fromClipboard)
+            local brushSize = 1
+            local brush = Brush(brushSize)
+            app.layer = drawingLayerProperties.layer
+            app.useTool{
+                tool = "rectangular_marquee",
+                brush = brush,
+                points = {Point(2,2)},
+                button = MouseButton.left,
+                layer = drawingLayerProperties.layer,
+                tilemapMode=TilemapMode.PIXELS,
+                tilesetMode=TilesetMode.MANUAL,
+                selection=SelectionMode.REPLACE,
+                freehandAlgorithm=1,
+                contiguous=true,
+            }
+            app.useTool{
+                tool = "rectangular_marquee",
+                brush = brush,
+                points = {Point(2,2)},
+                button = MouseButton.right,
+                layer = drawingLayerProperties.layer,
+                tilemapMode=TilemapMode.PIXELS,
+                tilesetMode=TilesetMode.MANUAL,
+                selection=SelectionMode.SUBTRACT,
+                freehandAlgorithm=1,
+                contiguous=true,
+            }
+            app.tool = "pencil"
         end
     }
 end

@@ -40,7 +40,7 @@ function QuickAutoTileActionsNewLayerTab:Init(dialog)
         focus = false,
         onclick = function()
             local drawingLayerProperties
-            drawingLayerProperties = LayerProperties.createLayerFromSpriteReturnDrawingLayerProperties(self.drawingLayerName)
+            drawingLayerProperties = LayerProperties.createLayerFromSpriteReturnLayerPropertiesObject(self.drawingLayerName)
             local tileProperties = TileProperties.getFromSprite(app.sprite)
             if not tileProperties.isValid then
                 self.dialog:modify{

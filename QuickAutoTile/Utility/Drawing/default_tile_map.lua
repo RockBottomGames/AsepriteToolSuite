@@ -1,4 +1,6 @@
 local TileUtils = dofile("./tiles.lua")
+local TileProperties = dofile("../Sprite/tile_properties.lua")
+
 local colorIndices = {
     edge = 1,
     inner = 3,
@@ -384,10 +386,31 @@ local DefaultTileMap = {
     }
 }
 
-function DefaultTileMap:draw(halfTileWidth, halfTileHeight, layer)
+function DefaultTileMap:draw(halfTileWidth, halfTileHeight, layer, refLayer)
+    app.command.TilesetMode{mode="auto"}
+
     for _, tile in ipairs(self.tiles) do
         TileUtils:drawTile(tile, halfTileWidth, halfTileHeight, layer)
     end
+
+    app.command.TilesetMode{mode="manual"}
+    local brushSize = 1
+    local brush = Brush(brushSize)
+    local tileProperties = TileProperties.getFromSprite(layer.sprite)
+    
+    app.useTool{
+        tool = "rectangular_marquee",
+        brush = brush,
+        points = {Point(0,0), Point(tileProperties.canvasWidth, tileProperties.canvasHeight)},
+        button = MouseButton.left,
+        layer = refLayer,
+        tilemapMode=TilemapMode.PIXELS,
+        tilesetMode=TilesetMode.MANUAL,
+        freehandAlgorithm=1,
+        contiguous=true,
+    }
+
+    app.command.Cut()
 end
 
 return DefaultTileMap

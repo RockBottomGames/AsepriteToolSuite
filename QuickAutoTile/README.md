@@ -6,12 +6,10 @@
 * Start by opening the Autotile Dialog:
     ![menu option for auto tile dialog](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileMenuOption.png?raw=true)
     ![opened auto tile dialog](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileActionDialogNewSprite.png?raw=true)
-* It is then recommended to change the tilemap mode to Manual: Modify existent tiles
+* It is then recommended to keep the tilemap mode at Manual: Modify existent tiles
     ![tilemap mode manual](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileTileModeRecommended.png?raw=true)
-    * Once in this mode you can freely draw and all matching cells will update.
+    * While in this mode you can freely draw and all matching cells will update.
         ![what it should look like after initializing](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileWhatItShouldLookLike.png?raw=true)
-        * It is recommended to select all and cut the guide and then paste it on another layer and make it transparent to help guide where to draw
-        * It is also recommended to show the grid while you work
         ![example of drawing on the tileset](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileTipsForDrawing.png?raw=true)
     * The top areas are the minimum requirement to fill out the whole set
         ![full drawing](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileAsepriteRef.png?raw=true)

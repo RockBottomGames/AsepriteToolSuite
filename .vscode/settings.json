@@ -11,6 +11,7 @@
         "TilemapMode",
         "TilesetMode",
         "Point",
-        "Color"
+        "Color",
+        "SelectionMode"
     ]
 }

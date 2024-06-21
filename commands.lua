@@ -9,17 +9,17 @@ function ToolSuiteCommands:Init(plugin, preferences, parent_id)
         title = "Rock Bottom Games Tool Suite",
         group = parent_id
     }
-    plugin:newCommand{
-        id = constants.TOOL_SUITE_ENABLED_ID,
-        title = "Toggle Tool Suite Enabled/Disabled",
-        group = constants.TOOL_SUITE_GROUP_ID,
-        onenabled = function()
-            return true
-        end,
-        onclick = function()
-            preferences[constants.TOOL_SUITE_ENABLED_KEY]:Toggle()
-        end
-    }
+    -- plugin:newCommand{
+    --     id = constants.TOOL_SUITE_ENABLED_ID,
+    --     title = "Toggle Tool Suite Enabled/Disabled",
+    --     group = constants.TOOL_SUITE_GROUP_ID,
+    --     onenabled = function()
+    --         return true
+    --     end,
+    --     onclick = function()
+    --         preferences[constants.TOOL_SUITE_ENABLED_KEY]:Toggle()
+    --     end
+    -- }
 end
 
 return ToolSuiteCommands
