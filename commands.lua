@@ -1,4 +1,4 @@
-local constants = dofile("./constants.lua")
+local constants = dofile("./BaseCode/constants.lua")
 
 local ToolSuiteCommands = {}
 

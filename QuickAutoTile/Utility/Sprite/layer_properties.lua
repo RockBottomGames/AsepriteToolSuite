@@ -1,3 +1,4 @@
+local TileProperties = dofile("./tile_properties.lua")
 local LayerProperties = {}
 
 function LayerProperties.new(
@@ -61,6 +62,56 @@ function LayerProperties.searchForLayerByName(name)
         return nil
     end
     return searchLayers(app.sprite.layers)
+end
+
+function LayerProperties.createNewLayer(
+    layerName,
+    tilemap,
+    gridbounds,
+    top
+)
+    local nextLayerName = layerName
+    local foundLayer = LayerProperties.searchForLayerByName(nextLayerName)
+    local count = 1
+    while foundLayer ~= nil do
+        count = count + 1
+        nextLayerName = layerName .. " " .. tostring(count)
+        foundLayer = LayerProperties.searchForLayerByName(nextLayerName)
+    end
+
+    app.command.NewLayer {
+        name=nextLayerName,
+        tilemap=tilemap,
+        gridBounds=gridbounds,
+        top=top
+    }
+
+    return nextLayerName
+end
+
+function LayerProperties.createLayerFromSpriteReturnDrawingLayerProperties(
+    drawingLayerName
+)
+    if app.sprite == nil then
+        return
+    end
+    local tileProperties = TileProperties.getFromSprite(app.sprite)
+    if not tileProperties.isValid then
+        return
+    end
+
+    local actualDrawingLayerName = LayerProperties.createNewLayer(
+        drawingLayerName,
+        true,
+        Rectangle(0, 0, tileProperties.halfTileWidth, tileProperties.halfTileHeight),
+        true
+    )
+
+    local layer = LayerProperties.searchForLayerByName(actualDrawingLayerName)
+    local layerProperties = LayerProperties.new(layer)
+    layerProperties:UpdateLayerProperties()
+
+    return layerProperties
 end
 
 return LayerProperties

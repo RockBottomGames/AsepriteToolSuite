@@ -1,5 +1,5 @@
-local EnableTogglePreference = dofile("../Utility/Preferences/enable_toggle.lua")
-local constants = dofile("../constants.lua")
+local EnableTogglePreference = dofile("./CopyOfBaseCode/Utility/Preferences/enable_toggle.lua")
+local constants = dofile("./CopyOfBaseCode/constants.lua")
 
 local ToolSuitePreferences = {}
 

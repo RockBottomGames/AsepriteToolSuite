@@ -1,0 +1,24 @@
+{
+    "name": "rock-bottom-games-godot-quick-auto-tile",
+    "displayName": "Rock Bottom Games Quick Auto Tile",
+    "description": "This plugin is meant to help speed up making Auto Tile Terrains for godot.",
+    "version": "0.1",
+    "author": {
+        "name": "Taylor Blanche",
+        "email": "tblanche@rockbottom.games",
+        "url": "https://rockbottom.games/"
+    },
+    "contributors": [],
+    "publisher": "tblanche",
+    "license": "CC-BY-4.0",
+    "categories": [
+        "Scripts"
+    ],
+    "contributes": {
+        "scripts": [
+            {
+                "path": "./main.lua"
+            }
+        ]
+    }
+}

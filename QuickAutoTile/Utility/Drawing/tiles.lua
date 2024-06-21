@@ -1,4 +1,4 @@
-local ShapeDrawingUtils = dofile("../../../Utility/Drawing/shapes.lua")
+local ShapeDrawingUtils = dofile("../../CopyOfBaseCode/Utility/Drawing/shapes.lua")
 
 local DrawTilesUtils = {
     colors = {
@@ -124,8 +124,8 @@ local DrawTilesUtils = {
                 },
             },
             [2] = {
-                width = 2,
-                height = 2,
+                width = 1,
+                height = 1,
                 outlines = {
                 },
             },
@@ -137,8 +137,8 @@ local DrawTilesUtils = {
                 },
             },
             [4] = {
-                width = 1,
-                height = 1,
+                width = 2,
+                height = 2,
                 outlines = {
                     [3] = true,
                     [4] = true,
