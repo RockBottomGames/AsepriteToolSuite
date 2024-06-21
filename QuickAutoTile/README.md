@@ -1,10 +1,11 @@
 # Godot Quick Auto Tile
 
 * This tool is to help make creating auto tile terrains easier
-* To use:
-    * Start by opening the Autotile Dialog:
-        ![menu option for auto tile dialog](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileMenuOption.png?raw=true)
-        ![opened auto tile dialog](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileActionDialogNewSprite.png?raw=true)
+
+## Basic Usage:
+* Start by opening the Autotile Dialog:
+    ![menu option for auto tile dialog](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileMenuOption.png?raw=true)
+    ![opened auto tile dialog](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileActionDialogNewSprite.png?raw=true)
 * It is then recommended to change the tilemap mode to Manual: Modify existent tiles
     ![tilemap mode manual](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileTileModeRecommended.png?raw=true)
     * Once in this mode you can freely draw and all matching cells will update.
@@ -30,3 +31,22 @@
     * Set tilemap mode back to Manual: Modify existent tiles
     * I would have made a command for this but the api doesn't let me have access to allowed flips x, y, or d
         * this is why this readme exists!
+
+## New Layer
+* If you have already created a sprite using the dialog and steps listed above, a new tab will appear in the actions dialog.
+    ![full drawing](https://github.com/RockBottomGames/AsepriteToolSuite/blob/main/QuickAutoTile/readme_images/QuickAutoTileNewLayerpng?raw=true)
+* This tab will let you create a new tilemap layer with the same guide on it (which is how the auto drawing works)
+
+## Future Additions
+* Coming soon - Create tileset export layer
+    * This will just create a new tilemap layer based on an existing tilemap layer and copy the bottom portion of all frames to the new layer's frames
+        * Then it will be up to you to export tileset.
+* Coming eventually - Export Tilesets
+    * If you want to export currently
+        * you must make a new tilemap at 2 * half tile width and 2 * half tile height
+        * then copy the bottom half to the top of a new layer
+        * then export tileset and choose options like:
+            * don't ignore empty tiles (that's why I put the top left corner as empty as aseprite puts empty tile there by default)
+            * make the rows limited to 12 tiles (this will then match the layout)
+            * Add any kind of other options you like, for example: extrude
+    * I have no idea how to nicely do animations export for godot, good luck if that is what you want to do. (I will likely be able to make something programatically for that later)
