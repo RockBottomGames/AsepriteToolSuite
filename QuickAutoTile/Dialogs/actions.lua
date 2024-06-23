@@ -1,5 +1,6 @@
 local NewSpriteTab = dofile("./Tabs/new_sprite.lua")
 local NewLayerTab = dofile("./Tabs/new_layer.lua")
+local LayerActionsTabSet = dofile("./Tabs/layer_actions.lua")
 
 local QuickAutoTileActionsDialog = {
     dialog = nil,
@@ -31,11 +32,14 @@ function QuickAutoTileActionsDialog:Init(onClose)
         id = constants.ACTION_TAB_SET_ID,
         selected = NewSpriteTab.constants.NEW_SPRITE_TAB_ID
     }
+    
+    LayerActionsTabSet:Init(self.dialog)
 end
 
 function QuickAutoTileActionsDialog:Update()
     NewSpriteTab:Update()
     NewLayerTab:Update()
+    LayerActionsTabSet:Update()
 end
 
 function QuickAutoTileActionsDialog:Open(onClose)
