@@ -1,5 +1,7 @@
 local TileUtils = dofile("./tiles.lua")
 local TileProperties = dofile("../Sprite/tile_properties.lua")
+local DrawingFunctions = dofile("../../CopyOfBaseCode/Utility/Drawing/functions.lua")
+
 
 local colorIndices = {
     edge = 1,
@@ -273,7 +275,17 @@ local tileRefs = {
     }),
 }
 
+local constants = {
+    selectActionTypes = {
+        SELECT_ONLY = DrawingFunctions.constants.selectActionTypes.SELECT_ONLY,
+        SELECT_AND_COPY = DrawingFunctions.constants.selectActionTypes.SELECT_AND_COPY,
+        SELECT_AND_CUT = DrawingFunctions.constants.selectActionTypes.SELECT_AND_CUT,
+        SELECT_AND_CLEAR = DrawingFunctions.constants.selectActionTypes.SELECT_AND_CLEAR
+    },
+}
+
 local DefaultTileMap = {
+    constants = constants,
     tiles = {
         -------------------------------------------------------
         tileRefs.edgeBox:place(Rectangle{x=1, y=1}),
@@ -386,7 +398,10 @@ local DefaultTileMap = {
     }
 }
 
-function DefaultTileMap:draw(halfTileWidth, halfTileHeight, layer, refLayer)
+function DefaultTileMap:draw(halfTileWidth, halfTileHeight, layer, afterDrawFlag)
+    if afterDrawFlag == nil then
+        afterDrawFlag = constants.selectActionTypes.SELECT_ONLY
+    end
     app.command.TilesetMode{mode="auto"}
 
     for _, tile in ipairs(self.tiles) do
@@ -397,20 +412,36 @@ function DefaultTileMap:draw(halfTileWidth, halfTileHeight, layer, refLayer)
     local brushSize = 1
     local brush = Brush(brushSize)
     local tileProperties = TileProperties.getFromSprite(layer.sprite)
-    
-    app.useTool{
-        tool = "rectangular_marquee",
-        brush = brush,
-        points = {Point(0,0), Point(tileProperties.canvasWidth, tileProperties.canvasHeight)},
-        button = MouseButton.left,
-        layer = refLayer,
-        tilemapMode=TilemapMode.PIXELS,
-        tilesetMode=TilesetMode.MANUAL,
-        freehandAlgorithm=1,
-        contiguous=true,
-    }
+    if afterDrawFlag ~= constants.DO_NOTHING then
+        app.useTool{
+            tool = "rectangular_marquee",
+            brush = brush,
+            points = {Point(0,0), Point(tileProperties.canvasWidth, tileProperties.canvasHeight)},
+            button = MouseButton.left,
+            layer = layer,
+            tilemapMode=TilemapMode.PIXELS,
+            tilesetMode=TilesetMode.MANUAL,
+            freehandAlgorithm=1,
+            contiguous=true,
+        }
+    end
 
-    app.command.Cut()
+    DrawingFunctions.selectAll(afterDrawFlag, layer)
+end
+
+function DefaultTileMap:copyFromReferenceLayer(layerTo, referenceLayer)
+    if layerTo == nil or referenceLayer == nil then
+        return
+    end
+    app.layer = referenceLayer
+    DrawingFunctions.selectAll(constants.selectActionTypes.SELECT_AND_COPY, referenceLayer)
+    app.command.TilesetMode{mode="auto"}
+
+    app.layer = layerTo
+    app.command.Paste()
+
+    app.command.TilesetMode{mode="manual"}
+    DrawingFunctions.selectAll(constants.selectActionTypes.SELECT_AND_CLEAR, layerTo)
 end
 
 return DefaultTileMap

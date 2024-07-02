@@ -17,8 +17,7 @@ function SpriteUtilsProperties.createSpriteWithPropertiesReturnDrawingLayerPrope
         true
     )
 
-    local layer = LayerProperties.searchForLayerByName(actualDrawingLayerName)
-    local layerProperties = LayerProperties.new(layer)
+    local layerProperties = LayerProperties.searchForLayerByName(actualDrawingLayerName, LayerProperties.constants.DRAWING_LAYER_TYPE)
     layerProperties:UpdateLayerProperties()
 
     return layerProperties

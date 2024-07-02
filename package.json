@@ -2,7 +2,7 @@
     "name": "rock-bottom-games-aseprite-tools-suite",
     "displayName": "Rock Bottom Games Aseprite Tool Suite",
     "description": "This plugin is meant to combine all the plugins that I write for Rock Bottom Games L.L.C. into an open source plugin for anyone else interested in them to use.",
-    "version": "0.1.1",
+    "version": "0.2",
     "author": {
         "name": "Taylor Blanche",
         "email": "tblanche@rockbottom.games",
