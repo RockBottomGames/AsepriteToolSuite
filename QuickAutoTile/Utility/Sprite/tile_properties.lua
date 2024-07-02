@@ -21,6 +21,7 @@ function TileProperties.new(
         tileHeight = halfTileHeight * 2,
         canvasWidth = halfTileWidth * 24,
         canvasHeight = halfTileHeight * 16,
+        halfCanvasHeight = halfTileHeight * 8,
         isValid = isValid,
     }
 

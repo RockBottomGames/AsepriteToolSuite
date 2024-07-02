@@ -1,9 +1,13 @@
 local TileProperties = dofile("./tile_properties.lua")
+
+local constants = {
+    DRAWING_LAYER_TYPE = 2,
+    REFERENCE_LAYER_TYPE = 1,
+    REFERENCE_LAYER_NAME = "Reference Layer"
+}
+
 local LayerProperties = {
-    layerTypes = {
-        DRAWING_LAYER = 2,
-        REFERENCE_LAYER = 1
-    }
+    constants = constants
 }
 
 function LayerProperties.new(
@@ -11,7 +15,7 @@ function LayerProperties.new(
     layerType
 )
     if layerType == nil then
-        layerType = LayerProperties.DRAWING_LAYER
+        layerType = constants.DRAWING_LAYER_TYPE
     end
 
     local LayerPropertiesObject = {
@@ -56,15 +60,18 @@ function LayerProperties.getFromLayer(layer)
     return nil
 end
 
-function LayerProperties.searchForLayerByName(name)
+function LayerProperties.searchForLayerByName(name, layerType)
     if app.sprite == nil then
         return nil
+    end
+    if layerType == nil then
+        layerType = constants.REFERENCE_LAYER_TYPE
     end
     local searchLayers 
     searchLayers = function(layers)
         for _,layer in ipairs(layers) do
             if layer.name == name then
-                return layer
+                return LayerProperties.new(layer, layerType)
             end
             if layer.isGroup then
                 local subLayerSearch = searchLayers(layer.layers)
@@ -86,7 +93,7 @@ function LayerProperties.searchForLayerByType(layerType)
     searchLayers = function(layers)
         for _,layer in ipairs(layers) do
             if layer.properties ~= nil and layer.properties.layerType == layerType then
-                return layer
+                return LayerProperties.new(layer, layerType)
             end
             if layer.isGroup then
                 local subLayerSearch = searchLayers(layer.layers)
@@ -110,13 +117,13 @@ function LayerProperties.searchForLayersByType(layerType)
     searchLayers = function(layers)
         for _,layer in ipairs(layers) do
             if layer.properties ~= nil and layer.properties.layerType == layerType then
-                foundLayers[index] = layer
+                foundLayers[index] = LayerProperties.new(layer, layerType)
                 index = index + 1
             end
             if layer.isGroup then
                 local subLayerSearch = searchLayers(layer.layers)
-                for _, subLayer in ipairs(subLayerSearch) do
-                    foundLayers[index] = subLayer
+                for _, subLayerProperties in ipairs(subLayerSearch) do
+                    foundLayers[index] = subLayerProperties
                     index = index + 1
                 end
             end
@@ -183,7 +190,7 @@ function LayerProperties.createLayerFromSpriteReturnLayerPropertiesObject(
         tilemap = true
     end
 
-    local actualDrawingLayerName = LayerProperties.createNewLayer(
+    local actualLayerName = LayerProperties.createNewLayer(
         layerName,
         tilemap,
         Rectangle(0, 0, tileProperties.halfTileWidth, tileProperties.halfTileHeight),
@@ -192,8 +199,7 @@ function LayerProperties.createLayerFromSpriteReturnLayerPropertiesObject(
         fromClipboard
     )
 
-    local layer = LayerProperties.searchForLayerByName(actualDrawingLayerName)
-    local layerProperties = LayerProperties.new(layer, layerType)
+    local layerProperties = LayerProperties.searchForLayerByName(actualLayerName, layerType)
     layerProperties:UpdateLayerProperties()
 
     return layerProperties
